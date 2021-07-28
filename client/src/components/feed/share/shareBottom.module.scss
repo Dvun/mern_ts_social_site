@@ -1,0 +1,52 @@
+.shareBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  .shareOptions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .shareOption {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lightgray;
+        border-radius: 5px;
+      }
+
+      svg {
+        font-size: 18px;
+        margin: 5px 0 5px 5px;
+      }
+
+      span {
+        font-weight: 500;
+        margin: 5px;
+      }
+
+      &:last-child {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  button {
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: forestgreen;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 5px;
+
+    &:hover {
+      background-color: darkgreen;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.homePage {
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas:
+  'Topbar Topbar Topbar'
+  'homePageContent homePageContent homePageContent';
+
+  .homePageContent {
+    grid-area: homePageContent;
+
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+    'Sidebar Feed Rightside';
+  }
+}

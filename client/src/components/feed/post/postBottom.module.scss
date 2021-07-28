@@ -1,0 +1,26 @@
+.postBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+
+  .postBottomLeft {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .postBottomRight {
+    cursor: pointer;
+
+    span {
+      border-bottom: 1px dashed gray;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.profilePage {
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas:
+  'Topbar Topbar Topbar'
+  'profilePageContent profilePageContent profilePageContent';
+
+  .profilePageContent {
+    grid-area: profilePageContent;
+
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+    'Sidebar Profile Profile'
+    'Sidebar Feed Rightside';
+  }
+}

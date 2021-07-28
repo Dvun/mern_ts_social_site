@@ -1,0 +1,25 @@
+@import "../../media_queris";
+
+.topBarLeft {
+  flex: 3.5;
+
+  @include sm {
+    flex: 1.7;
+  }
+
+  span {
+    font-weight: 700;
+    font-size: 24px;
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+
+    @include sm {
+      font-size: 15px;
+    }
+
+    @include lt-sm {
+      font-size: 15px;
+    }
+  }
+}

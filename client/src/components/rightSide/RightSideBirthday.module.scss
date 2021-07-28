@@ -1,0 +1,18 @@
+.birthDayContainer {
+  padding: 20px;
+  box-shadow: 0 0 16px -8px rgba(0, 0, 0, .68);
+  -webkit-box-shadow: 0 0 16px -8px rgba(0, 0, 0, .68);
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+
+  .gift {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  span {
+    font-weight: 300;
+  }
+}

@@ -1,0 +1,45 @@
+.profileFriends {
+  margin-top: 20px;
+
+  h4 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .userFriendsItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+
+    .userFriendsItem {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      span {
+        text-align: center;
+      }
+
+      svg {
+        position: absolute;
+        bottom: 40px;
+        right: 5px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid white;
+        background-color: white;
+      }
+    }
+  }
+}

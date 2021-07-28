@@ -1,0 +1,197 @@
+@import '../../media_queris';
+
+.topBarRight {
+  flex: 3.5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 30px;
+  color: white;
+
+  @include lt-sm {
+    flex: 1;
+  }
+
+  @include lt-sm {
+    flex: 1;
+  }
+
+  @include sm {
+    flex: 1;
+  }
+
+  .topBarMenu {
+    display: flex;
+
+    @include lt-sm {
+      display: none;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    @include sm {
+      display: none;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    a {
+      margin-right: 10px;
+      cursor: pointer;
+      color: white;
+
+      &:hover {
+        color: #d4bcbc;
+      }
+    }
+
+    .linkActive {
+      color: #d4bcbc;
+    }
+  }
+
+  .topBarIcons {
+    display: flex;
+
+    @include xs {
+      display: none;
+    }
+
+    @include lt-sm {
+      display: none;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    @include sm {
+      display: none;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .topBarIconsItem {
+      margin-right: 20px;
+      cursor: pointer;
+      position: relative;
+
+      svg {
+
+        &:hover {
+          color: #d4bcbc;
+        }
+      }
+
+      span {
+        position: absolute;
+        bottom: 0;
+        right: -8px;
+        background-color: red;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+      }
+    }
+  }
+
+  img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    padding: 2px;
+    transition: padding .0s ease-in-out, border .3s ease-in-out;
+
+    &:hover {
+      width: 42px;
+      height: 42px;
+      border: 2px solid white;
+      padding: 0;
+    }
+
+    @include xs {
+      display: none;
+    }
+
+    @include lt-sm {
+      display: none;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    @include sm {
+      display: none;
+      flex: 1;
+      justify-content: flex-end;
+    }
+  }
+
+  .hideMenu {
+    width: 40px;
+    height: 40px;
+    position: relative;
+
+    @include gt-sm {
+      display: none;
+    }
+
+    span {
+      width: 40px;
+      height: 3px;
+      background-color: white;
+      transition: all .3s ease-in-out;
+    }
+
+    .hideMenuLine1 {
+      position: absolute;
+      top: 10px;
+      transform: rotate(0deg);
+    }
+
+    .hideMenuLine2 {
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all .3s ease-in-out;
+    }
+
+    .hideMenuLine3 {
+      position: absolute;
+      bottom: 10px;
+      transform: rotate(0deg);
+    }
+  }
+
+  .hideMenuOpen {
+    width: 40px;
+    height: 40px;
+    position: relative;
+
+    span {
+      width: 40px;
+      height: 3px;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all .3s ease-in-out;
+    }
+
+    .hideMenuLine1 {
+      transform: rotate(45deg);
+    }
+
+    .hideMenuLine2 {
+      display: none;
+    }
+
+    .hideMenuLine3 {
+      transform: rotate(-45deg);
+    }
+  }
+}

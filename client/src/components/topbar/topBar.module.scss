@@ -1,0 +1,11 @@
+.topBar {
+  grid-area: Topbar;
+  height: 50px;
+  width: 100%;
+  background-color: #166FE5;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  position: fixed;
+  z-index: 999;
+}

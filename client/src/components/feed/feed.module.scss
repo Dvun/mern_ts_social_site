@@ -1,0 +1,23 @@
+.feed {
+  grid-area: Feed;
+  height: calc(100vh - 50px);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+
+  .feedWrapper {
+    width: 100%;
+    max-width: 80%;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0.1px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}

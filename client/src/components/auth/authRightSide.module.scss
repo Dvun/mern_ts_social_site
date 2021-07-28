@@ -1,0 +1,75 @@
+@import "../../media_queris";
+
+.loginBox {
+  height: 500px;
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      height: 50px;
+      border-radius: 10px;
+      border: 1px solid gray;
+      font-size: 18px;
+      padding-left: 20px;
+      margin-bottom: 20px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      height: 50px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+      margin: 30px 0;
+    }
+
+    .loginButton {
+      background-color: #1775ee;
+
+      &:hover {
+        background-color: #05449e;
+      }
+    }
+
+    .createButton {
+      align-self: center;
+      width: 50%;
+      background-color: #42b72a;
+
+      &:hover {
+        background-color: #207211;
+      }
+
+      @include xs {
+        width: 100%;
+      }
+    }
+
+    span {
+      text-align: center;
+      color: #1775ee;
+      cursor: pointer;
+    }
+  }
+}

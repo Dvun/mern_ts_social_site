@@ -1,0 +1,29 @@
+.sidebar {
+  grid-area: Sidebar;
+  height: calc(100vh - 50px);
+  position: sticky;
+  top: 50px;
+
+  .sidebarWrapper {
+    padding: 20px;
+
+    button {
+      width: 150px;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+
+      &:hover {
+        background-color: #166FE5;
+        color: white;
+      }
+    }
+
+    hr {
+      margin: 20px 0
+    }
+  }
+}

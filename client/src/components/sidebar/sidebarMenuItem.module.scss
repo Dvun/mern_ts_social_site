@@ -1,0 +1,23 @@
+.sidebarMenuItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightgray;
+    border-radius: 10px;
+  }
+
+  svg {
+    font-size: 30px;
+    margin-right: 15px;
+  }
+
+  span {
+
+  }
+}
