@@ -7,3 +7,4 @@ const tokenModel = new mongoose.Schema({
 
 
 const TokenModel = mongoose.model('Token', tokenModel)
+module.exports = TokenModel

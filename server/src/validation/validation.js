@@ -16,6 +16,13 @@ const validation = {
       .withMessage('Password minimum length is 6 chars!').matches(/\d/).withMessage('Password must contains a number!'),
   ],
 
+  loginValidator: [
+    check('email', 'Email is required!').notEmpty().isEmail().normalizeEmail().custom(validateEmail)
+      .withMessage('Email is not correct!'),
+    check('password', 'Password is required!').notEmpty().isLength({min: 6})
+      .withMessage('Password minimum length is 6 chars!').matches(/\d/).withMessage('Password must contains a number!'),
+  ]
+
 };
 
 module.exports = validation

@@ -5,6 +5,14 @@ export interface IUser {
   lastName: string
 }
 
+export interface IUserData {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  repeatPassword: string
+}
+
 export interface IPost {
   id: number
   desc?: string

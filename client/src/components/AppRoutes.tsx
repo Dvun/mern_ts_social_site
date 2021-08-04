@@ -4,7 +4,7 @@ import {privateRoutes, publicRoutes} from '../config/routes';
 import {RoutesEnum} from '../interfaces/routeInterfaces';
 
 const AppRoutes: React.FC = () => {
-  const isAuth = true;
+  const isAuth = false;
 
   return (
     isAuth ?
