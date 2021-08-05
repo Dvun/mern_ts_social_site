@@ -3,7 +3,6 @@ const cors = require('cors')
 const fs = require('fs')
 const {startDb} = require('./config/dbConfig');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-const {authRouter} = require('./routes');
 require('dotenv').config()
 
 const app = express()
@@ -16,9 +15,8 @@ app.use(express.urlencoded({extended: false}))
 
 
 // Routes
-// const routesDir = './src/routes'
-// fs.readdirSync(routesDir).map(router => app.use('/api', require(`./routes/${router}`)))
-app.use('/api', authRouter)
+const routesDir = './src/routes'
+fs.readdirSync(routesDir).map(router => app.use('/api', require(`./routes/${router}`)))
 app.use(errorMiddleware)
 
 const PORT = process.env.PORT || 5000
