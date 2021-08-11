@@ -1,16 +1,14 @@
-const jwt = require('jsonwebtoken');
+const TokenService = require('../services/tokenService')
 
 class AuthMiddleware {
 
   async verifyToken(req, res, next) {
     try {
       const accessToken = req.headers.authorization && req.headers.authorization.split(' ')[1];
-      if (!accessToken) return res.status(401).json('Not authorized, token failed!');
-      const decodedToken = await jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET);
-      req.user = decodedToken;
-      next();
+      req.user = await TokenService.verifyToken(accessToken)
+      next()
     } catch (e) {
-      res.status(401).json('Not authorized, token failed!');
+      next(e);
     }
   }
 

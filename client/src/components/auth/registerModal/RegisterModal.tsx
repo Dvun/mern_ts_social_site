@@ -4,17 +4,21 @@ import {IUserData} from '../../../interfaces/interfaces';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {registerSchema} from '../../../validation/validation';
-import {useDispatch} from 'react-redux';
-import AuthAction from '../../../store/authReducer/action-creators'
+import {useDispatch, useSelector} from 'react-redux';
+import AuthAction from '../../../store/authSlice/authActions';
+import {Button, Spinner} from 'react-bootstrap';
+import {RootState} from '../../../store/store';
 
 interface IRegisterModalProps {
   handleOpenModal: () => void;
 }
 
 const RegisterModal: React.FC<IRegisterModalProps> = ({handleOpenModal}) => {
-  const dispatch = useDispatch()
-  const {handleSubmit, register, watch, formState: {errors}} = useForm<IUserData>({
-    resolver: yupResolver(registerSchema)
+  const dispatch = useDispatch();
+  const {isLoading, user} = useSelector(({authSlice}: RootState) => authSlice);
+  const accessToken = localStorage.getItem('accessToken')
+  const {handleSubmit, register, watch, formState: {errors}, reset} = useForm<IUserData>({
+    resolver: yupResolver(registerSchema),
   });
   const watchFields = watch();
 
@@ -22,7 +26,7 @@ const RegisterModal: React.FC<IRegisterModalProps> = ({handleOpenModal}) => {
     if (data.password !== data.repeatPassword) {
       return;
     }
-    dispatch(AuthAction.userRegister(data))
+    dispatch(AuthAction.userRegister(data, reset, handleOpenModal));
   };
 
   return (
@@ -59,6 +63,14 @@ const RegisterModal: React.FC<IRegisterModalProps> = ({handleOpenModal}) => {
               <div className={styles.emailContainer}>
                 <div>
                   <input
+                    type="text"
+                    placeholder="Your Username"
+                    style={errors.email && {border: '1px solid red'}}
+                    {...register('userName', {required: true})}
+                  />
+                </div>
+                <div>
+                  <input
                     type="email"
                     placeholder="Your Email"
                     style={errors.email && {border: '1px solid red'}}
@@ -83,7 +95,20 @@ const RegisterModal: React.FC<IRegisterModalProps> = ({handleOpenModal}) => {
                   {errors.repeatPassword && <span>{errors.repeatPassword.message}</span>}
                 </div>
               </div>
-              <button type="submit">Register</button>
+
+              <Button variant="primary" disabled={!user && isLoading && !accessToken } type="submit" className={styles.loginButton}>
+                {
+                  !user && isLoading && !accessToken &&
+                  <Spinner
+                    as='span'
+                    animation={'border'}
+                    role="status"
+                    aria-hidden="true"
+                  />
+                }
+                Register
+              </Button>
+
             </div>
           }
         </form>

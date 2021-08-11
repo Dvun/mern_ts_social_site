@@ -9,5 +9,5 @@ export interface IRoute {
 export enum RoutesEnum {
   'AUTH' = '/auth',
   'HOME' = '/',
-  'PROFILE' = '/profile/:userId'
+  'PROFILE' = '/profile/:userName'
 }

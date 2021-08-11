@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AuthAction, AuthActionTypes, IAuthState, RegisterUserAction} from './interfaces';
+import {IAuthState} from './interfaces';
 import {IUser} from '../../interfaces/interfaces';
 
 const initialState: IAuthState = {
   isAuth: false,
   isLoading: false,
-  user: {} as IUser,
+  user: null,
   success: null,
   error: null
 }
@@ -19,12 +19,17 @@ const authSlice = createSlice({
       state.success = action.payload
     },
 
-    userLogin(state, action: PayloadAction<IUser>) {
+    userLogin(state, action: PayloadAction<IUser | null>) {
       state.user = action.payload
+      state.isAuth = action.payload !== null
     },
 
     fetchData(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload
+    },
+
+    userIsAuth(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload
     }
   }
 })
@@ -33,5 +38,5 @@ export default authSlice.reducer
 export const {
   userRegister,
   userLogin,
-  fetchData
+  fetchData,
 } = authSlice.actions

@@ -2,9 +2,10 @@ import React from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {privateRoutes, publicRoutes} from '../config/routes';
 import {RoutesEnum} from '../interfaces/routeInterfaces';
+import {RootStateOrAny, useSelector} from 'react-redux';
 
 const AppRoutes: React.FC = () => {
-  const isAuth = false;
+  const {isAuth} = useSelector(({authSlice}: RootStateOrAny) => authSlice)
 
   return (
     isAuth ?

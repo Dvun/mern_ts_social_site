@@ -1,24 +1,21 @@
-import React, {useState} from 'react';
-import styles from './topBarRight.module.scss'
+import React from 'react';
+import styles from './topBarRight.module.scss';
 import PersonIcon from '@material-ui/icons/Person';
 import MessageIcon from '@material-ui/icons/Message';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { NavLink } from 'react-router-dom';
-import {RoutesEnum} from '../../interfaces/routeInterfaces';
+import {Link} from 'react-router-dom';
+import {Dropdown, DropdownButton} from 'react-bootstrap';
+import {useDispatch, useSelector} from 'react-redux';
+import AuthAction from '../../store/authSlice/authActions';
+import {RootState} from '../../store/store';
 
 const TopBarRight: React.FC = () => {
-  const [hiddenMenu, setHiddenMenu] = useState(false)
-
-  const handleOpenMenu = () => {
-    setHiddenMenu(prevState => !prevState)
-  }
+  const dispatch = useDispatch();
+  const {user} = useSelector(({authSlice}: RootState) => authSlice);
 
   return (
     <div className={styles.topBarRight}>
       <ul className={styles.topBarMenu}>
-        <NavLink to={RoutesEnum.HOME} activeClassName={styles.linkActive}>
-          <li>Homepage</li>
-        </NavLink>
         <li>Timeline</li>
       </ul>
       <ul className={styles.topBarIcons}>
@@ -35,11 +32,27 @@ const TopBarRight: React.FC = () => {
           <span>1</span>
         </li>
       </ul>
-      <img src="/assets/person/1.jpeg" alt="profile"/>
-      <div className={!hiddenMenu ? styles.hideMenu : styles.hideMenuOpen} onClick={handleOpenMenu}>
-        <span className={styles.hideMenuLine1}/>
-        <span className={styles.hideMenuLine2}/>
-        <span className={styles.hideMenuLine3}/>
+
+      <div className={styles.dropDownContainer}>
+          <Link to={`/profile/${user?.userName}`} className={styles.imgAndName}>
+            <img src={user?.profilePicture || '/assets/person/defaultPerson.png'} alt="person"/>
+            {user?.firstName}
+        </Link>
+
+        <DropdownButton
+          title=""
+        >
+          <Dropdown.Item as={Link} to="/">Home Page</Dropdown.Item>
+          <Dropdown.Item>Profile</Dropdown.Item>
+          <Dropdown.Divider/>
+          <Dropdown.Item
+            as={Link}
+            to='/auth'
+            onClick={() => dispatch(AuthAction.userLogout())}
+          >Logout
+          </Dropdown.Item>
+        </DropdownButton>
+
       </div>
     </div>
   );

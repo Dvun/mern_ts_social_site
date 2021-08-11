@@ -11,7 +11,7 @@ const FriendsContainer: React.FC = () => {
       <ul>
         {
           Users.map(user => (
-            <FriendItem key={user.id} user={user}/>
+            <FriendItem key={user._id} user={user}/>
           ))
         }
       </ul>

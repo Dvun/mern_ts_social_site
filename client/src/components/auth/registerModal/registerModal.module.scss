@@ -102,10 +102,18 @@
       font-size: 18px;
       font-weight: 500;
       transition: all .3s ease-in-out;
+      color: black;
+      position: relative;
 
       &:hover {
         color: white;
         background-color: #166FE5;
+      }
+
+      span {
+        top: -10px;
+        left: 8px;
+        position: absolute;
       }
     }
   }

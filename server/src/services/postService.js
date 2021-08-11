@@ -1,23 +1,24 @@
-const apiError = require('../middlewares/apiError');
 const PostModel = require('../models/postModel');
+const ApiError = require('../middlewares/apiError')
 
 
 class PostService {
 
   async getAllPosts() {
     const posts = await PostModel.find();
+    if (!posts) throw ApiError.BadRequest('No created post yet!')
     return posts;
   }
 
   async getAllPostsByUser(userId) {
     const postByUser = await PostModel.find({userId: userId});
-    if (!postByUser) return apiError(200, 'User have no posts!');
+    if (!postByUser) throw ApiError.BadRequest('User have no posts!');
     return postByUser;
   }
 
   async getPostById(postId) {
     const post = await PostModel.findById({_id: postId});
-    if (!post) return apiError(400, 'Post not found!');
+    if (!post) throw ApiError.BadRequest('Post not found!');
     return post;
   }
 
@@ -27,9 +28,7 @@ class PostService {
   }
 
   async updatePost(postId, updatedPost) {
-    await PostModel.findByIdAndUpdate(postId, {
-      ...updatedPost
-    })
+    await PostModel.findByIdAndUpdate({_id: postId}, {...updatedPost})
   }
 
   async deletePost(postId) {

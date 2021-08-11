@@ -3,16 +3,16 @@ import styles from './post.module.scss'
 import PostTop from './PostTop';
 import PostCenter from './PostCenter';
 import PostBottom from './PostBottom';
-import {IPost, IUser} from '../../../interfaces/interfaces';
-import {Users} from '../../../dummyData';
+import {IPost} from '../../../interfaces/interfaces';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../store/store';
 
 interface IPostProps {
   post: IPost
 }
 
 const Post: React.FC<IPostProps> = ({post}) => {
-
-  const user: IUser = Users.filter(user => user.id === post.userId)[0]
+  const {user} = useSelector(({authSlice}: RootState) => authSlice)
 
   return (
     <div className={styles.post}>

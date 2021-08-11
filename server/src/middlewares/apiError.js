@@ -1,3 +1,6 @@
+
+
+
 module.exports = class ApiError extends Error {
   status;
   errors;
@@ -9,7 +12,11 @@ module.exports = class ApiError extends Error {
   }
 
   static BadRequest(message, errors= []) {
-    return new ApiError(400, message, {errors: errors})
+    return new ApiError(400, message, errors)
+  }
+
+  static NotAuthorized() {
+    return new ApiError(401, 'Not authorized, token failed!')
   }
 
 }

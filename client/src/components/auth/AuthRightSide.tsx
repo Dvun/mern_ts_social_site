@@ -1,25 +1,68 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './authRightSide.module.scss';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
+import {useForm} from 'react-hook-form';
+import {IUserLogin} from '../../interfaces/interfaces';
+import {Button, Spinner} from 'react-bootstrap';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {loginSchema} from '../../validation/validation';
+import AuthAction from '../../store/authSlice/authActions';
 
 interface IAuthRightSideProps {
   handleOpenModal: () => void;
 }
 
 const AuthRightSide: React.FC<IAuthRightSideProps> = ({handleOpenModal}) => {
+  const dispatch = useDispatch();
+  const {isLoading} = useSelector(({authSlice}: RootStateOrAny) => authSlice);
+  const {handleSubmit, watch, formState: {errors}, register, reset} = useForm({
+    resolver: yupResolver(loginSchema)
+  });
+  const watchFields = watch();
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault()
-  }
+  const onSubmit = (data: IUserLogin) => {
+    dispatch(AuthAction.userLogin(data, reset))
+  };
 
   return (
     <div className={styles.loginBox}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputContainer}>
-          <input type="email" placeholder="Your Email"/>
-          <input type="password" placeholder="Your Password"/>
+          {
+            watchFields &&
+            <>
+              <div>
+                <input
+                  style={errors.email && {border: '1px solid red'}}
+                  type="email"
+                  placeholder="Your Email"
+                  {...register('email')}
+                />
+              </div>
+              <div>
+                <input
+                  style={errors.password && {border: '1px solid red'}}
+                  type="password"
+                  placeholder="Your Password"
+                  {...register('password')}
+                />
+                {errors.password && <span>{errors.password.message}</span>}
+              </div>
+            </>
+          }
         </div>
         <div className={styles.buttonContainer}>
-          <button className={styles.loginButton}>Log In</button>
+
+          <Button className={styles.loginButton} variant="primary" disabled={isLoading} type="submit">
+            <Spinner
+              as="span"
+              animation={isLoading && 'border'}
+              role="status"
+              aria-hidden="true"
+            />
+            Log In
+          </Button>
+
           <span>Forgot Password?</span>
           <button
             type={'button'}

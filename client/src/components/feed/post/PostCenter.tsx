@@ -3,7 +3,7 @@ import styles from './postCenter.module.scss'
 
 interface IPostCenterProps {
   desc?: string
-  photo: string
+  photo?: string
 }
 
 const PostCenter: React.FC<IPostCenterProps> = ({desc, photo}) => {
@@ -14,7 +14,7 @@ const PostCenter: React.FC<IPostCenterProps> = ({desc, photo}) => {
       <div className={styles.postText}>
         <span>{desc}</span>
       </div>
-      <img src={PF + photo} alt="post"/>
+      {photo && <img src={PF + photo} alt="post"/>}
     </div>
   );
 };

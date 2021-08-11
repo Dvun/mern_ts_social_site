@@ -1,14 +1,13 @@
-const apiError = require('../middlewares/apiError');
 const PostService = require('../services/postService')
 
 class PostController {
 
   async getAllPosts(req, res, next) {
     try {
-      const posts = PostService.getAllPosts()
-      res.status(200).json(posts)
+      const posts = await PostService.getAllPosts()
+      res.json(posts)
     } catch (e) {
-      next(apiError(500, 'Server Error!'));
+      next(e);
     }
   }
 
@@ -18,7 +17,7 @@ class PostController {
       const postsByUser = await PostService.getAllPostsByUser(userId)
       res.json(postsByUser)
     } catch (e) {
-      next(apiError(500, 'Server Error!'));
+      next(e);
     }
   }
 
@@ -28,7 +27,7 @@ class PostController {
       const post = await PostService.getPostById(postId)
       res.json(post)
     } catch (e) {
-      next(apiError(500, 'Server Error!'));
+      next(e);
     }
   }
 
@@ -38,7 +37,7 @@ class PostController {
     res.status(200).json('New post created!')
     try {
     } catch (e) {
-      next(apiError(500, 'Server Error!'));
+      next(e);
     }
   }
 
@@ -50,7 +49,8 @@ class PostController {
       await PostService.updatePost(postId, updatedPost)
       res.status(200).json('Post updated!')
     } catch (e) {
-      next(apiError(500, 'Server Error!'));
+      console.log(e);
+      next(e);
     }
   }
 
@@ -60,7 +60,7 @@ class PostController {
       await PostService.deletePost(postId)
       res.status(200).json('Post deleted!')
     } catch (e) {
-      next(apiError(500, 'Server Error!'));
+      next(e);
     }
   }
 

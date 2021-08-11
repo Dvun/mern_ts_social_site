@@ -22,6 +22,7 @@
 
   .topBarMenu {
     display: flex;
+    margin-bottom: 0;
 
     @include lt-sm {
       display: none;
@@ -52,6 +53,7 @@
 
   .topBarIcons {
     display: flex;
+    margin-bottom: 0;
 
     @include xs {
       display: none;
@@ -97,101 +99,57 @@
     }
   }
 
-  img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-    padding: 2px;
-    transition: padding .0s ease-in-out, border .3s ease-in-out;
+  .dropDownContainer {
+    display: flex;
 
-    &:hover {
+    .imgAndName {
+      border-radius: 21px;
+      background-color: #05449e;
+      height: 42px;
+      width: calc(100% + 42px);
+      display: flex;
+      align-items: center;
+      padding: 0 10px 0 0;
+      cursor: pointer;
+      margin-right: 10px;
+      color: white;
+
+      &:hover {
+        background-color: #0b5ed7;
+      }
+
+      @include xs {
+        display: none;
+      }
+
+      @include lt-sm {
+        display: none;
+        flex: 1;
+        justify-content: flex-end;
+      }
+
+      @include sm {
+        display: none;
+        flex: 1;
+        justify-content: flex-end;
+      }
+
+      img {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: padding .0s ease-in-out, border .3s ease-in-out;
+        margin-right: 10px;
+      }
+    }
+
+    button {
+      border-radius: 50%;
+      background-color: #05449e;
       width: 42px;
       height: 42px;
-      border: 2px solid white;
-      padding: 0;
-    }
-
-    @include xs {
-      display: none;
-    }
-
-    @include lt-sm {
-      display: none;
-      flex: 1;
-      justify-content: flex-end;
-    }
-
-    @include sm {
-      display: none;
-      flex: 1;
-      justify-content: flex-end;
-    }
-  }
-
-  .hideMenu {
-    width: 40px;
-    height: 40px;
-    position: relative;
-
-    @include gt-sm {
-      display: none;
-    }
-
-    span {
-      width: 40px;
-      height: 3px;
-      background-color: white;
-      transition: all .3s ease-in-out;
-    }
-
-    .hideMenuLine1 {
-      position: absolute;
-      top: 10px;
-      transform: rotate(0deg);
-    }
-
-    .hideMenuLine2 {
-      display: block;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      transition: all .3s ease-in-out;
-    }
-
-    .hideMenuLine3 {
-      position: absolute;
-      bottom: 10px;
-      transform: rotate(0deg);
-    }
-  }
-
-  .hideMenuOpen {
-    width: 40px;
-    height: 40px;
-    position: relative;
-
-    span {
-      width: 40px;
-      height: 3px;
-      background-color: white;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      transition: all .3s ease-in-out;
-    }
-
-    .hideMenuLine1 {
-      transform: rotate(45deg);
-    }
-
-    .hideMenuLine2 {
-      display: none;
-    }
-
-    .hideMenuLine3 {
-      transform: rotate(-45deg);
     }
   }
 }
