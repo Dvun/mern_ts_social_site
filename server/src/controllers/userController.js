@@ -3,7 +3,6 @@ const UserService = require('../services/userService');
 class UserController {
 
   async getMyProfile(req, res, next) {
-    console.log(req.params);
     const {userId} = req.params
     try {
       const profile = await UserService.getMyProfile(userId)

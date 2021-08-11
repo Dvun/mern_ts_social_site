@@ -1,8 +1,10 @@
-import {IUserData, IUserLogin, IUserLoginData} from '../../interfaces/interfaces';
+import {IAccessToken, IUserData, IUserLogin} from '../../interfaces/interfaces';
 import {AppDispatch} from '../store';
 import {fetchData, userLogin} from './authSlice';
 import {callApi} from '../../helpers/callApi';
 import {toast} from 'react-toastify';
+import {getMyProfile} from '../userSlice/userSlice';
+import {decodeToken} from '../../helpers/decodeToken';
 
 class AuthAction {
 
@@ -26,15 +28,11 @@ class AuthAction {
   userLogin = (user: IUserLogin, reset?: () => void) => async (dispatch: AppDispatch) => {
     try {
       await dispatch(fetchData(true));
-      const res = await callApi.post<IUserLoginData>('/auth/login', user);
-      if (res.statusText === 'OK') {
+      const res = await callApi.post<IAccessToken>('/auth/login', user);
+      if (res.status === 200) {
         localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
-        const localUser = {
-          email: res.data.user.email,
-          _id: res.data.user._id
-        }
-        localStorage.setItem('user', JSON.stringify(localUser));
-        dispatch(userLogin(res.data.user))
+        const userData = await decodeToken(res.data.accessToken);
+        dispatch(userLogin(userData));
         dispatch(fetchData(false));
         reset && reset();
       }
@@ -57,18 +55,13 @@ class AuthAction {
     }
   };
 
-  refreshToken = (user: IUserLogin) => async (dispatch: AppDispatch) => {
+  refreshToken = (userId: string | undefined) => async (dispatch: AppDispatch) => {
     try {
-      const res = await callApi.post<IUserLoginData>('/auth/refresh', user);
-      console.log(res);
-      if (res.statusText === 'OK') {
+      const res = await callApi.post<IAccessToken>('/auth/refresh', {userId: userId});
+      if (res.status === 200) {
         localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
-        const localUser = {
-          email: res.data.user.email,
-          _id: res.data.user._id
-        }
-        localStorage.setItem('user', JSON.stringify(localUser));
-        dispatch(userLogin(res.data.user));
+        const userData = await decodeToken(res.data.accessToken);
+        dispatch(userLogin(userData));
       }
     } catch (e) {
       if (e.response.statusText === 'Unauthorized' || e.response.data.message === 'Token not found!') {

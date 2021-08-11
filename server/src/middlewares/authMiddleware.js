@@ -1,14 +1,15 @@
 const TokenService = require('../services/tokenService')
+const ApiError = require('../middlewares/apiError')
 
 class AuthMiddleware {
 
   async verifyToken(req, res, next) {
     try {
-      const accessToken = req.headers.authorization && req.headers.authorization.split(' ')[1];
+      let accessToken = req.headers.authorization && req.headers.authorization.split(' ')[1];
       req.user = await TokenService.verifyToken(accessToken)
       next()
     } catch (e) {
-      next(e);
+      next(ApiError.NotAuthorized())
     }
   }
 

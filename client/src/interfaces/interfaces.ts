@@ -8,9 +8,6 @@ export interface IUser {
   lastName: string
   userName: string
   email: string
-  password: string
-  createdAt: string
-  updatedAt: string
 }
 
 export interface IUserData {
@@ -39,9 +36,4 @@ export interface IUserLogin {
 
 export interface IAccessToken {
   accessToken: string
-}
-
-export interface IUserLoginData {
-  accessToken: IAccessToken
-  user: IUser
 }

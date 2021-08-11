@@ -24,28 +24,16 @@ class AuthService {
     if (!user) throw ApiError.BadRequest(`User not registered!`);
     const comparePass = bcrypt.compareSync(password, user.password);
     if (!comparePass) throw ApiError.BadRequest(`Email or password is not correct!`);
-    const userData = {
-      _id: user._id,
-      email: user.email,
-    };
-    const token = await TokenService.generateToken(userData);
-    return {
-      user: user,
-      accessToken: token,
-    };
+    const token =  await TokenService.generateToken(user)
+    return {accessToken: token}
   }
 
-  async refreshToken(userData) {
-    const token = await TokenModel.findOne({userId: userData._id})
-    if (!token) throw ApiError.BadRequest('Token not found!')
-    const currentUser = await UserModel.findById(userData._id)
-    if (!currentUser) throw ApiError.BadRequest('User not found!')
-    const user = await TokenService.verifyRefreshToken(token)
-    const accessToken = await TokenService.generateToken(userData)
-    return {
-      user: currentUser,
-      accessToken
-    }
+  async tokenRefresh(id) {
+    const data = await TokenModel.findOne({userId: id})
+    if (!data) throw ApiError.BadRequest('Token not found!')
+    const user = await TokenService.verifyRefreshToken(data.refreshToken)
+    const accessToken = await TokenService.generateToken(user)
+    return {accessToken: accessToken}
   }
 
   async logoutUser(userId) {

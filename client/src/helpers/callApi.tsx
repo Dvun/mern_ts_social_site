@@ -2,33 +2,17 @@ import axios, {AxiosRequestConfig} from 'axios';
 import AuthAction from '../store/authSlice/authActions';
 import store from '../store/store';
 
-function getTokenANdUserFromLocalStorage() {
-  let accessToken = JSON.parse(localStorage.getItem('accessToken') as string);
-  let user = JSON.parse(localStorage.getItem('user') as string);
-  return {
-    accessToken,
-    user,
-  };
-}
-
-let userData = getTokenANdUserFromLocalStorage();
-
 export const callApi = axios.create({
   baseURL: 'http://localhost:5000/api/',
-  withCredentials: true,
-  headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}
+  withCredentials: true
 });
 
 callApi.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-
-    if (config.url === '/auth/login' || config.url === '/auth/register' || config.url === '/auth/logout') {
-      config.headers = {'Content-Type': 'application/json'};
+    let token = JSON.parse(localStorage.getItem('accessToken') as string)
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
     }
-    // if (config.url === '/posts' || config.url === '/post') {
-    //   const {accessToken} = getTokenANdUserFromLocalStorage();
-    //   config.headers = {Authorization: `Bearer ${accessToken}`};
-    // }
     return config;
   },
   (error) => {
@@ -38,15 +22,19 @@ callApi.interceptors.request.use(
 
 
 callApi.interceptors.response.use(
-  async (config) => {
+  (config) => {
     return config;
   },
   (error) => {
-    if (error.response === undefined || userData.accessToken === undefined  || !userData.accessToken || !userData.user) {
-      store.dispatch(AuthAction.userLogout());
-    }
+
+    console.log(error.response);
+    // if (!user || accessToken || error.response.statusText === 'Not Found') {
+    //   store.dispatch(AuthAction.userLogout());
+    // }
     if (error.response.statusText === 'Unauthorized') {
-      store.dispatch(AuthAction.refreshToken(userData.user));
+      console.log('work in here');
+      const userId = store.getState().authSlice.user?._id
+      store.dispatch(AuthAction.refreshToken(userId));
     }
     return Promise.reject(error);
   },

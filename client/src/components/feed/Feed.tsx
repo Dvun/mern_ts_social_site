@@ -10,13 +10,13 @@ import {RootState} from '../../store/store';
 const Feed: React.FC = () => {
   const dispatch = useDispatch();
   const {posts, isLoading: isLoadingPosts} = useSelector(({postSlice}: RootState) => postSlice);
-  const {user, isAuth, isLoading} = useSelector(({authSlice}: RootState) => authSlice);
+  const {isAuth, isLoading} = useSelector(({authSlice}: RootState) => authSlice);
 
   useEffect(() => {
-    if (user && isAuth && !isLoading) {
+    if (isAuth && !isLoading) {
       dispatch(PostAction.getAllPosts());
     }
-  }, [dispatch, isAuth, isLoading, user]);
+  }, [dispatch, isAuth, isLoading]);
 
   return (
     <div className={styles.feed}>

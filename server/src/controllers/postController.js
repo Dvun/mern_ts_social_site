@@ -7,6 +7,7 @@ class PostController {
       const posts = await PostService.getAllPosts()
       res.json(posts)
     } catch (e) {
+
       next(e);
     }
   }

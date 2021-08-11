@@ -2,22 +2,26 @@ import React, {useEffect} from 'react';
 import AppRoutes from '../components/AppRoutes';
 import './App.scss';
 import {ToastContainer} from 'react-toastify';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../store/store';
+import {useDispatch} from 'react-redux';
+import {userLogin} from '../store/authSlice/authSlice';
+import {decodeToken} from '../helpers/decodeToken';
 
-let localUser = JSON.parse(localStorage.getItem('user') as string);
-let accessToken: string | null = localStorage.getItem('accessToken');
+let accessToken = JSON.parse(localStorage.getItem('accessToken') as string);
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const {isLoading} = useSelector(({authSlice}: RootState) => authSlice);
+
+
 
   useEffect(() => {
-    if (localUser && accessToken) {
-    } else {
-      return
+    if (accessToken) {
+      async function getDataFromToken() {
+        const user = await decodeToken(accessToken)
+        dispatch(userLogin(user));
+      }
+      getDataFromToken()
     }
-  }, [dispatch, isLoading]);
+  }, [dispatch]);
 
   return (
     <>

@@ -8,12 +8,9 @@ export const Users: IUser[] = [
     lastName: 'Kocaoglu',
     userName: 'Safak',
     coverPicture: '',
-    password: '',
     followers: [],
     followings: [],
-    email: 'some email',
-    createdAt: 'time here',
-    updatedAt: 'time here'
+    email: 'some email'
   },
 ];
 

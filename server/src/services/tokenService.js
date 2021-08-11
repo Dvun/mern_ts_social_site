@@ -5,11 +5,22 @@ const UserModel = require('../models/userModel');
 
 class TokenService {
 
-  async generateToken(payload) {
-    const accessToken = await jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: '10m'});
-    const refreshToken = await jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: '30d'});
-    const tokenInModel = await TokenModel.findOne({userId: payload._id});
-    if (!tokenInModel) await TokenModel.create({userId: payload._id, refreshToken});
+  async generateToken(user) {
+    const userData = {
+      profilePicture: user.profilePicture,
+      coverPicture: user.coverPicture,
+      followers: user.followers,
+      followings: user.followings,
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      userName: user.userName,
+      email: user.email,
+    };
+    const accessToken = await jwt.sign(userData, process.env.JWT_ACCESS_SECRET, {expiresIn: '10m'});
+    const refreshToken = await jwt.sign(userData, process.env.JWT_REFRESH_SECRET, {expiresIn: '30d'});
+    const tokenInModel = await TokenModel.findOne({userId: userData._id});
+    if (!tokenInModel) await TokenModel.create({userId: userData._id, refreshToken});
     return accessToken;
   }
 
@@ -21,13 +32,12 @@ class TokenService {
     return user
   }
 
-  async verifyRefreshToken(token) {
-    if (!token) throw ApiError.NotAuthorized();
-    const user = jwt.verify(token.refreshToken, process.env.JWT_REFRESH_SECRET);
-    if (!user) throw ApiError.NotAuthorized();
-    return {
-      user,
-    };
+  async verifyRefreshToken(data) {
+    if (!data) throw ApiError.NotAuthorized();
+    const decodedUser = jwt.verify(data, process.env.JWT_REFRESH_SECRET);
+    if (!decodedUser) throw ApiError.NotAuthorized();
+    const user = await UserModel.findById(decodedUser._id)
+    return user
   }
 
 }
