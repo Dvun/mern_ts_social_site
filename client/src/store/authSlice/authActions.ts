@@ -1,10 +1,10 @@
 import {IAccessToken, IUserData, IUserLogin} from '../../interfaces/interfaces';
 import {AppDispatch} from '../store';
-import {fetchData, userLogin} from './authSlice';
+import {fetchData, userLogin, userLogout} from './authSlice';
 import {callApi} from '../../helpers/callApi';
 import {toast} from 'react-toastify';
-import {getMyProfile} from '../userSlice/userSlice';
 import {decodeToken} from '../../helpers/decodeToken';
+import {fetchPosts, getPosts} from '../postSlice/postSlice';
 
 class AuthAction {
 
@@ -45,12 +45,11 @@ class AuthAction {
 
   userLogout = () => async (dispatch: AppDispatch) => {
     try {
-      const res = await callApi.post('/auth/logout/', {}, {withCredentials: true});
-      if (res.statusText === 'OK') {
-        dispatch(userLogin(null));
-        localStorage.removeItem('user');
-        localStorage.removeItem('accessToken');
-      }
+      await callApi.post('/auth/logout/');
+      dispatch(userLogout(null));
+      localStorage.removeItem('accessToken');
+      dispatch(fetchPosts(false))
+      dispatch(getPosts([]));
     } catch (e) {
     }
   };

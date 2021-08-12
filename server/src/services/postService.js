@@ -1,12 +1,12 @@
 const PostModel = require('../models/postModel');
-const ApiError = require('../middlewares/apiError')
+const ApiError = require('../middlewares/apiError');
 
 
 class PostService {
 
   async getAllPosts() {
-    const posts = await PostModel.find();
-    if (!posts) throw ApiError.BadRequest('No created post yet!')
+    const posts = await PostModel.find().populate('userId', 'profilePicture followers followings firstName lastName userName email');
+    if (!posts) throw ApiError.BadRequest('No created post yet!');
     return posts;
   }
 
@@ -28,7 +28,7 @@ class PostService {
   }
 
   async updatePost(postId, updatedPost) {
-    await PostModel.findByIdAndUpdate({_id: postId}, {...updatedPost})
+    await PostModel.findByIdAndUpdate({_id: postId}, {...updatedPost});
   }
 
   async deletePost(postId) {

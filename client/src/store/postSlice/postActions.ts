@@ -1,20 +1,22 @@
 import {AppDispatch} from '../store';
 import {toast} from 'react-toastify';
-import {fetchData, getAllPosts} from './postSlice';
+import {fetchPosts, getPosts} from './postSlice';
 import {callApi} from '../../helpers/callApi';
-import { IPost } from '../../interfaces/interfaces';
+import {IPost} from '../../interfaces/interfaces';
 
 
 class PostAction {
 
   getAllPosts = () => async (dispatch: AppDispatch) => {
     try {
-      dispatch(fetchData(true));
+      dispatch(fetchPosts(true));
       const res = await callApi.get<IPost[]>('/posts');
-      await dispatch(getAllPosts(res.data));
-      dispatch(fetchData(false));
+      if (res.status === 200) {
+        dispatch(getPosts(res.data));
+        dispatch(fetchPosts(false));
+      }
     } catch (e) {
-
+      dispatch(fetchPosts(false));
     }
   };
 

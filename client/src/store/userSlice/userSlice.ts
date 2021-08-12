@@ -3,8 +3,7 @@ import {IUserState} from './interfaces';
 import {IUser} from '../../interfaces/interfaces';
 
 const initialState: IUserState = {
-  myProfile: null,
-  userProfile: null,
+  profile: null,
   isLoading: false,
   error: null
 }
@@ -14,15 +13,13 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
 
-    getMyProfile(state, action: PayloadAction<IUser>) {
-      state.myProfile = action.payload
+    getUserById(state, action: PayloadAction<IUser>) {
+      console.log('work');
+      state.profile = action.payload
+      state.isLoading = false
     },
 
-    getUserById(state, action: PayloadAction) {
-
-    },
-
-    fetchData(state, action: PayloadAction<boolean>) {
+    fetchUserAndData(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload
     }
 
@@ -31,7 +28,6 @@ const userSlice = createSlice({
 
 export default userSlice.reducer
 export const {
-  fetchData,
-  getMyProfile,
+  fetchUserAndData,
   getUserById
 } = userSlice.actions

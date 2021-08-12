@@ -16,7 +16,7 @@ app.use(cors({
   credentials: true,
   origin: process.env.CLIENT_URL,
 }));
-app.use('/images', express.static(path.join(__dirname, 'public/images')))
+app.use('/public/images', express.static(path.join(__dirname, '..', 'public', 'images')))
 
 
 // Routes

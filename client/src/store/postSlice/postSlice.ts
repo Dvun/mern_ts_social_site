@@ -14,11 +14,11 @@ const postSlice = createSlice({
   initialState: initialState,
   reducers: {
 
-    getAllPosts(state, action: PayloadAction<IPost[]>) {
+    getPosts(state, action: PayloadAction<IPost[]>) {
       state.posts = action.payload;
     },
 
-    fetchData(state, action: PayloadAction<boolean>) {
+    fetchPosts(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
 
@@ -27,6 +27,6 @@ const postSlice = createSlice({
 
 export default postSlice.reducer;
 export const {
-  getAllPosts,
-  fetchData,
+  getPosts,
+  fetchPosts,
 } = postSlice.actions;

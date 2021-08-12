@@ -1,7 +1,7 @@
 import {IPost} from '../../interfaces/interfaces';
 
 export interface IPostState {
-  posts: IPost[]
+  posts: IPost[] | []
   post: IPost | null
   error: string | null
   isLoading: boolean

@@ -24,9 +24,11 @@ export interface IPost {
   desc?: string
   photo?: string
   date: string
-  userId: string
-  like: number
+  userId: IUser
+  likes: string[]
   comment: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface IUserLogin {

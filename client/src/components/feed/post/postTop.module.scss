@@ -4,34 +4,37 @@
   align-items: center;
   justify-content: space-between;
 
-  .postTopLeft {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+    .postTopLeft {
+      color: black;
 
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-    }
+      div {
+        display: flex;
+        cursor: pointer;
 
-    .nameAndTime {
-      display: flex;
-      flex-direction: column;
-      margin-left: 10px;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+          cursor: pointer;
+        }
 
-      .name {
-        font-weight: 500;
+        .nameAndTime {
+          display: flex;
+          flex-direction: column;
+          margin-left: 10px;
+
+          .name {
+            font-weight: 500;
+          }
+
+          .time {
+            font-size: 12px;
+            color: gray;
+          }
+        }
       }
-
-      .time {
-        font-size: 12px;
-        color: gray;
-      }
     }
-  }
 
   .postTopRight {
     cursor: pointer;

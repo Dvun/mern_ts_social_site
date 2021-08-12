@@ -3,6 +3,7 @@ const TokenModel = require('../models/tokenModel');
 const bcrypt = require('bcrypt');
 const TokenService = require('../services/tokenService');
 const ApiError = require('../middlewares/apiError');
+const UserDto = require('../dtos/userDto')
 
 class AuthService {
 
@@ -24,7 +25,8 @@ class AuthService {
     if (!user) throw ApiError.BadRequest(`User not registered!`);
     const comparePass = bcrypt.compareSync(password, user.password);
     if (!comparePass) throw ApiError.BadRequest(`Email or password is not correct!`);
-    const token =  await TokenService.generateToken(user)
+    const userDto = new UserDto(user)
+    const token =  await TokenService.generateToken({...userDto})
     return {accessToken: token}
   }
 
@@ -32,7 +34,8 @@ class AuthService {
     const data = await TokenModel.findOne({userId: id})
     if (!data) throw ApiError.BadRequest('Token not found!')
     const user = await TokenService.verifyRefreshToken(data.refreshToken)
-    const accessToken = await TokenService.generateToken(user)
+    const userDto = new UserDto(user)
+    const accessToken = await TokenService.generateToken({...userDto})
     return {accessToken: accessToken}
   }
 

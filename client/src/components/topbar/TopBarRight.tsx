@@ -10,6 +10,7 @@ import AuthAction from '../../store/authSlice/authActions';
 import {RootState} from '../../store/store';
 
 const TopBarRight: React.FC = () => {
+  const PF = process.env['REACT_APP_PUBLIC_FOLDER'];
   const dispatch = useDispatch();
   const {user} = useSelector(({authSlice}: RootState) => authSlice);
 
@@ -34,9 +35,12 @@ const TopBarRight: React.FC = () => {
       </ul>
 
       <div className={styles.dropDownContainer}>
-          <Link to={`/profile/${user?.userName}`} className={styles.imgAndName}>
-            <img src={user?.profilePicture || '/assets/person/defaultPerson.png'} alt="person"/>
-            {user?.firstName}
+        <Link to={`/profile/${user?.userName}`} className={styles.imgAndName}>
+          <img
+            src={user?.profilePicture ? `${PF}${user?._id}/avatar/${user?.profilePicture}` : '/assets/person/defaultPerson.png'}
+            alt="person"
+          />
+          {user?.firstName}
         </Link>
 
         <DropdownButton
@@ -47,7 +51,7 @@ const TopBarRight: React.FC = () => {
           <Dropdown.Divider/>
           <Dropdown.Item
             as={Link}
-            to='/auth'
+            to="/auth"
             onClick={() => dispatch(AuthAction.userLogout())}
           >Logout
           </Dropdown.Item>

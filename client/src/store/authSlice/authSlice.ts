@@ -30,7 +30,12 @@ const authSlice = createSlice({
 
     userIsAuth(state, action: PayloadAction<boolean>) {
       state.isAuth = action.payload
-    }
+    },
+
+    userLogout(state, action: PayloadAction<IUser | null>) {
+      state.user = action.payload
+      state.isAuth = action.payload !== null
+    },
   }
 })
 
@@ -39,4 +44,5 @@ export const {
   userRegister,
   userLogin,
   fetchData,
+  userLogout
 } = authSlice.actions

@@ -1,30 +1,37 @@
 import React from 'react';
 import styles from './postTop.module.scss';
 import {MoreVert} from '@material-ui/icons';
-import {IUser} from '../../../interfaces/interfaces';
+import {IPost} from '../../../interfaces/interfaces';
+import {format} from 'timeago.js';
+import {Link} from 'react-router-dom'
+import {useDispatch} from 'react-redux';
+import UserAction from '../../../store/userSlice/userActions'
 
 interface IPostTopProps {
-  date: string;
-  user: IUser | null;
+  post: IPost;
 }
 
-const PostTop: React.FC<IPostTopProps> = ({date, user}) => {
+const PostTop: React.FC<IPostTopProps> = ({post}) => {
+  const dispatch = useDispatch()
   const PF = process.env['REACT_APP_PUBLIC_FOLDER'];
 
   return (
     <div className={styles.postTop}>
-      <div className={styles.postTopLeft}>
-        {
-          user?.profilePicture ?
-            <img src={user?.profilePicture} alt="person"/>
-            :
-            <img src="/assets/person/defaultPerson.png" alt="person"/>
-        }
-        <div className={styles.nameAndTime}>
-          <span className={styles.name}>{`${user?.firstName} ${user?.lastName}`}</span>
-          <span className={styles.time}>{date}</span>
+      <Link
+        className={styles.postTopLeft} to={`/profile/${post.userId.userName}`}
+        onClick={() => dispatch(UserAction.getUserProfile(post.userId._id))}
+      >
+        <div>
+          <img
+            src={post.userId?.profilePicture ? `${PF}${post.userId?._id}/avatar/${post.userId?.profilePicture}` : '/assets/person/defaultPerson.png'}
+            alt="person"
+          />
+          <div className={styles.nameAndTime}>
+            <span className={styles.name}>{`${post.userId.firstName} ${post.userId.lastName}`}</span>
+            <span className={styles.time}>{format(post.createdAt)}</span>
+          </div>
         </div>
-      </div>
+      </Link>
       <div className={styles.postTopRight}>
         <MoreVert/>
       </div>

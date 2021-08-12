@@ -28,11 +28,10 @@ callApi.interceptors.response.use(
   (error) => {
 
     console.log(error.response);
-    // if (!user || accessToken || error.response.statusText === 'Not Found') {
-    //   store.dispatch(AuthAction.userLogout());
-    // }
+    if (!localStorage.getItem('accessToken') || error.response.statusText === 'Not Found') {
+      store.dispatch(AuthAction.userLogout());
+    }
     if (error.response.statusText === 'Unauthorized') {
-      console.log('work in here');
       const userId = store.getState().authSlice.user?._id
       store.dispatch(AuthAction.refreshToken(userId));
     }

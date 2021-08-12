@@ -3,8 +3,8 @@ const ApiError = require('../middlewares/apiError');
 
 class UserService {
 
-  async getMyProfile(userId) {
-    const profile = await UserModel.findById(userId);
+  async getUserProfile(userId) {
+    const profile = await UserModel.findById(userId)
     if (!profile) throw ApiError.BadRequest('Profile not found!')
     return profile
   }
