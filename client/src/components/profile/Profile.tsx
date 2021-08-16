@@ -32,8 +32,6 @@ const Profile: React.FC = () => {
     dispatch(UserAction.uploadImage(data));
   };
 
-  // TODO: Fix images render
-
   return (
     <div className={styles.profile} key={history.location.key}>
       <div className={styles.profileWrapper}>
@@ -44,11 +42,16 @@ const Profile: React.FC = () => {
             alt="cover"
           />
           <div className={styles.personPic}>
-            <img
-              className={styles.personImg}
-              src={profile?.profilePicture ? `${PF}${profile?._id}/avatar/${profile?.profilePicture}` : '/assets/person/defaultPerson.png'}
-              alt="person"
-            />
+            {
+              isLoading ?
+                <h2>Loading...</h2>
+                :
+                <img
+                  className={styles.personImg}
+                  src={profile?.profilePicture ? `${PF}${profile?._id}/avatar/${profile?.profilePicture}` : '/assets/person/defaultPerson.png'}
+                  alt="person"
+                />
+            }
             <div className={styles.changePic} style={user !== profile ? {display: 'none'} : {display: 'block'}}>
               <input
                 type="file"

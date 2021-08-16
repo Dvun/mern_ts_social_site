@@ -1,10 +1,10 @@
-import {IAccessToken, IUserData, IUserLogin} from '../../interfaces/interfaces';
+import {IUser, IUserData, IUserFromBackEnd, IUserLogin} from '../../interfaces/interfaces';
 import {AppDispatch} from '../store';
 import {fetchData, userLogin, userLogout} from './authSlice';
 import {callApi} from '../../helpers/callApi';
 import {toast} from 'react-toastify';
-import {decodeToken} from '../../helpers/decodeToken';
 import {fetchPosts, getPosts} from '../postSlice/postSlice';
+import {getUserById} from '../userSlice/userSlice';
 
 class AuthAction {
 
@@ -28,11 +28,10 @@ class AuthAction {
   userLogin = (user: IUserLogin, reset?: () => void) => async (dispatch: AppDispatch) => {
     try {
       await dispatch(fetchData(true));
-      const res = await callApi.post<IAccessToken>('/auth/login', user);
+      const res = await callApi.post<IUserFromBackEnd>('/auth/login', user);
       if (res.status === 200) {
         localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
-        const userData = await decodeToken(res.data.accessToken);
-        dispatch(userLogin(userData));
+        dispatch(userLogin(res.data.user));
         dispatch(fetchData(false));
         reset && reset();
       }
@@ -43,10 +42,25 @@ class AuthAction {
     }
   };
 
+  getMyProfile = (userId: string) => async (dispatch: AppDispatch) => {
+    try {
+      await dispatch(fetchData(true));
+      const res = await callApi.get<IUser>(`/auth/getMyProfile/${userId}`);
+      if (res.status === 200) {
+        dispatch(userLogin(res.data));
+        dispatch(fetchData(false));
+      }
+    } catch (e) {
+      dispatch(fetchData(false));
+      toast.error(e.response.data.message);
+    }
+  }
+
   userLogout = () => async (dispatch: AppDispatch) => {
     try {
       await callApi.post('/auth/logout/');
       dispatch(userLogout(null));
+      dispatch(getUserById(null));
       localStorage.removeItem('accessToken');
       dispatch(fetchPosts(false))
       dispatch(getPosts([]));
@@ -56,11 +70,10 @@ class AuthAction {
 
   refreshToken = (userId: string | undefined) => async (dispatch: AppDispatch) => {
     try {
-      const res = await callApi.post<IAccessToken>('/auth/refresh', {userId: userId});
+      const res = await callApi.post<IUserFromBackEnd>('/auth/refresh', {userId: userId});
       if (res.status === 200) {
         localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
-        const userData = await decodeToken(res.data.accessToken);
-        dispatch(userLogin(userData));
+        dispatch(userLogin(res.data.user));
       }
     } catch (e) {
       if (e.response.statusText === 'Unauthorized' || e.response.data.message === 'Token not found!') {

@@ -3,7 +3,7 @@ import AppRoutes from '../components/AppRoutes';
 import './App.scss';
 import {ToastContainer} from 'react-toastify';
 import {useDispatch} from 'react-redux';
-import {userLogin} from '../store/authSlice/authSlice';
+import AuthActions from '../store/authSlice/authActions'
 import {decodeToken} from '../helpers/decodeToken';
 
 let accessToken = JSON.parse(localStorage.getItem('accessToken') as string);
@@ -16,8 +16,8 @@ const App: React.FC = () => {
   useEffect(() => {
     if (accessToken) {
       async function getDataFromToken() {
-        const user = await decodeToken(accessToken)
-        dispatch(userLogin(user));
+        const userId = await decodeToken(accessToken)
+        await dispatch(AuthActions.getMyProfile(userId))
       }
       getDataFromToken()
     }

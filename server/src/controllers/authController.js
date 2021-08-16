@@ -16,7 +16,17 @@ class AuthController {
   async loginUser(req, res, next) {
     const {email, password} = req.body;
     try {
-      const user = await AuthService.loginUser(email, password);
+      const userData = await AuthService.loginUser(email, password);
+      res.status(200).json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getMyProfile(req, res, next) {
+    const {userId} = req.params
+    try {
+      const user = await AuthService.getMyProfile(userId);
       res.status(200).json(user);
     } catch (e) {
       next(e);
@@ -34,8 +44,8 @@ class AuthController {
   async refreshToken(req, res, next) {
     const {userId} = req.body
     try {
-      const user = await AuthService.tokenRefresh(userId);
-      res.status(200).json(user);
+      const userData = await AuthService.tokenRefresh(userId);
+      res.status(200).json(userData);
     } catch (e) {
       next(e);
     }

@@ -13,8 +13,7 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
 
-    getUserById(state, action: PayloadAction<IUser>) {
-      console.log('work');
+    getUserById(state, action: PayloadAction<IUser | null>) {
       state.profile = action.payload
       state.isLoading = false
     },

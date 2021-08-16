@@ -36,6 +36,7 @@ export interface IUserLogin {
   password: string
 }
 
-export interface IAccessToken {
+export interface IUserFromBackEnd {
   accessToken: string
+  user: IUser
 }

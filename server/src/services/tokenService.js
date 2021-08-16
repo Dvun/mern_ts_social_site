@@ -6,11 +6,12 @@ const UserDto = require('../dtos/userDto');
 
 class TokenService {
 
-  async generateToken(userData) {
-    const accessToken = await jwt.sign(userData, process.env.JWT_ACCESS_SECRET, {expiresIn: '10m'});
-    const refreshToken = await jwt.sign(userData, process.env.JWT_REFRESH_SECRET, {expiresIn: '30d'});
-    const tokenInModel = await TokenModel.findOne({userId: userData._id});
-    if (!tokenInModel) await TokenModel.create({userId: userData._id, refreshToken});
+  async generateToken(userId) {
+    const payload = {_id: userId}
+    const accessToken = await jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: '10m'});
+    const refreshToken = await jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: '30d'});
+    const tokenInModel = await TokenModel.findOne({userId: payload});
+    if (!tokenInModel) await TokenModel.create({userId: payload, refreshToken});
     return accessToken;
   }
 

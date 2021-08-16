@@ -8,6 +8,13 @@ module.exports = class UserDto {
   lastName;
   userName;
   email;
+  desc
+  city
+  work
+  school
+  university
+  from
+  relationship
 
   constructor(model) {
     this._id = model._id;
@@ -19,5 +26,12 @@ module.exports = class UserDto {
     this.coverPicture = model.coverPicture;
     this.followers = model.followers;
     this.followings = model.followings;
+    this.desc = model.desc
+    this.city = model.city
+    this.work = model.work
+    this.school = model.school
+    this.university = model.university
+    this.from = model.from
+    this.relationship = model.relationship
   }
 };

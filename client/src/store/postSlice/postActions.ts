@@ -11,6 +11,7 @@ class PostAction {
     try {
       dispatch(fetchPosts(true));
       const res = await callApi.get<IPost[]>('/posts');
+      console.log(res);
       if (res.status === 200) {
         dispatch(getPosts(res.data));
         dispatch(fetchPosts(false));
