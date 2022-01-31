@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './profileFriends.module.scss'
 import {ReactComponent as DeleteIcon} from './../../assets/delete.svg';
+import defaultPerson from '../../assets/defaultPerson.png'
+
 
 const ProfileFriends: React.FC = () => {
   const PF = process.env['REACT_APP_PUBLIC_FOLDER']
@@ -20,37 +22,37 @@ const ProfileFriends: React.FC = () => {
       <div className={styles.userFriendsItems}>
 
         <div className={styles.userFriendsItem} onClick={handleWatchProfile}>
-          <img src={PF + 'person/1.jpeg'} alt="person"/>
+          <img src={PF + 'person/1.jpeg' || defaultPerson} alt="person"/>
           <span>Roman Seveljov</span>
           <DeleteIcon onClick={(e) => handleDeleteFriend(e)}/>
         </div>
 
         <div className={styles.userFriendsItem}>
-          <img src={PF + 'person/1.jpeg'} alt="person"/>
+          <img src={PF + 'person/1.jpeg' || defaultPerson} alt="person"/>
           <span>Roman Seveljov</span>
           <DeleteIcon onClick={(e) => handleDeleteFriend(e)}/>
         </div>
 
         <div className={styles.userFriendsItem}>
-          <img src={PF + 'person/1.jpeg'} alt="person"/>
+          <img src={PF + 'person/1.jpeg' || defaultPerson} alt="person"/>
           <span>Roman Seveljov</span>
           <DeleteIcon onClick={(e) => handleDeleteFriend(e)}/>
         </div>
 
         <div className={styles.userFriendsItem}>
-          <img src={PF + 'person/1.jpeg'} alt="person"/>
+          <img src={PF + 'person/1.jpeg' || defaultPerson} alt="person"/>
           <span>Roman Seveljov</span>
           <DeleteIcon onClick={(e) => handleDeleteFriend(e)}/>
         </div>
 
         <div className={styles.userFriendsItem}>
-          <img src={PF + 'person/1.jpeg'} alt="person"/>
+          <img src={PF + 'person/1.jpeg' || defaultPerson} alt="person"/>
           <span>Roman Seveljov</span>
           <DeleteIcon onClick={(e) => handleDeleteFriend(e)}/>
         </div>
 
         <div className={styles.userFriendsItem}>
-          <img src={PF + 'person/1.jpeg'} alt="person"/>
+          <img src={PF + 'person/1.jpeg' || defaultPerson} alt="person"/>
           <span>Roman Seveljov</span>
           <DeleteIcon onClick={(e) => handleDeleteFriend(e)}/>
         </div>

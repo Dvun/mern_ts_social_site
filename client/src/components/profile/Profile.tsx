@@ -6,6 +6,9 @@ import UserAction from '../../store/userSlice/userActions';
 import {RootState} from '../../store/store';
 import {useHistory, useParams} from 'react-router-dom';
 import {getUserById} from '../../store/userSlice/userSlice';
+import background from '../../assets/default_background.jpeg'
+import defaultPerson from '../../assets/defaultPerson.png'
+
 
 const Profile: React.FC = () => {
   const history = useHistory();
@@ -17,9 +20,7 @@ const Profile: React.FC = () => {
   const data = new FormData();
 
   useEffect(() => {
-    if (user?.userName === userName) {
-      dispatch(getUserById(user!!));
-    }
+    if (user?.userName === userName) dispatch(getUserById(user));
   }, [dispatch, userName, user]);
 
   const handleChange = async (e: any) => {
@@ -38,7 +39,7 @@ const Profile: React.FC = () => {
         <div className={styles.profileCover}>
           <img
             className={styles.backGroundImg}
-            src={profile?.coverPicture ? `${PF}${profile?._id}/cover/${profile?.coverPicture}` : '/assets/post/3.jpeg'}
+            src={profile?.coverPicture ? `${PF}${profile?._id}/cover/${profile?.coverPicture}` : background}
             alt="cover"
           />
           <div className={styles.personPic}>
@@ -48,11 +49,11 @@ const Profile: React.FC = () => {
                 :
                 <img
                   className={styles.personImg}
-                  src={profile?.profilePicture ? `${PF}${profile?._id}/avatar/${profile?.profilePicture}` : '/assets/person/defaultPerson.png'}
+                  src={profile?.profilePicture ? `${PF}${profile?._id}/avatar/${profile?.profilePicture}` : defaultPerson}
                   alt="person"
                 />
             }
-            <div className={styles.changePic} style={user !== profile ? {display: 'none'} : {display: 'block'}}>
+            <div className={styles.changePic} style={user?.userName !== profile?.userName ? {display: 'none'} : {display: 'block'}}>
               <input
                 type="file"
                 id="changePic"
@@ -64,7 +65,7 @@ const Profile: React.FC = () => {
               <label htmlFor="changePic"><CameraAlt/></label>
             </div>
           </div>
-          <div className={styles.changeBackground} style={user !== profile ? {display: 'none'} : {display: 'block'}}>
+          <div className={styles.changeBackground} style={user?.userName !== profile?.userName ? {display: 'none'} : {display: 'block'}}>
             <input
               type="file"
               id="changeBackground"
