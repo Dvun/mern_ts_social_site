@@ -11,7 +11,7 @@ callApi.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     let token = JSON.parse(localStorage.getItem('accessToken') as string)
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers!.Authorization = `Bearer ${token}`
     }
     return config;
   },

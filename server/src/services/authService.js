@@ -9,13 +9,9 @@ class AuthService {
 
   async registerUser(userData) {
     const userEmail = await UserModel.findOne({email: userData.email});
-    if (userEmail) {
-      throw ApiError.BadRequest(`User with email ${userData.email} already registered!`)
-    }
+    if (userEmail) throw ApiError.BadRequest(`User with email ${userData.email} already registered!`)
     const userName = await UserModel.findOne({userName: userData.userName});
-    if (userName) {
-      throw ApiError.BadRequest(`Username is already registered, think about new one!`)
-    }
+    if (userName) throw ApiError.BadRequest(`Username is already registered, think about new one!`)
     const hashedPass = bcrypt.hashSync(userData.password, 10);
     await UserModel.create({...userData, password: hashedPass})
   }
